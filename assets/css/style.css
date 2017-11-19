@@ -1,0 +1,117 @@
+body {
+    background-color: #ffffff;
+}
+
+.app.app-alt {
+    padding-top: 100px;
+}
+
+.title {
+    color: #FF5A5F;
+}
+
+.btn.btn-aka {
+    background-color: #FF5A5F;
+    color: #ffffff;
+}
+
+.btn.btn-aka:hover {
+    background-color: #E55155;
+}
+
+.card-tabbed .card-tabbed-tabs {
+    max-width: 100%;
+}
+
+/* Style the tab */
+div.tab {
+   overflow: hidden;
+   border: 2px solid #eee;
+   border-bottom: none;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+   background-color: inherit;
+   float: left;
+   border: none;
+   outline: none;
+   cursor: pointer;
+   padding: 14px 20px;
+   /*transition: 0.3s;*/
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+   border-bottom: 3px solid #FF5A5F;
+
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+   border-bottom: 3px solid #FF5A5F;
+}
+
+/* Style the tab content */
+.tabcontent {
+   display: none;
+   padding: 20px;
+   border: 2px solid #eee;
+   border-top: none;
+}
+
+.tabcontent {
+    /*-webkit-animation: fadeEffect 1s;*/
+    /*animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/*@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}*/
+
+.content {
+    margin-top: 9em;
+}
+
+.far {
+    line-height: 32px;
+}
+
+.page-block {
+    margin: 9rem 0;
+    padding: 0 3rem
+}
+
+img.page-block-img {
+    display: block;
+    position: absolute;
+    top: 25%;
+}
+
+.footer {
+    background: #FAFAFA;
+    margin-top: 3em;
+    padding: 3em 0 2em 0;
+}
+
+.footer a {
+    margin: 30px;
+    color: #616161;
+    font-size: 18px;
+}
+
+.footer a:hover {
+    text-decoration: none;
+    color: #FF5A5F;
+}
+
+.footer img {
+    display: block;
+    margin: 0 auto;
+}
