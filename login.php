@@ -1,5 +1,42 @@
 <?php
-include "session.php";
+session_start();
+include "config.php";
+$signup_success = false;
+if (array_key_exists('login', $_POST)) {
+    // username dan password dari form login
+    $email = mysqli_real_escape_string($db, $_POST['email']);
+    $password = mysqli_real_escape_string($db, $_POST['password']);
+
+    $query = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+    $count = mysqli_num_rows($result);
+
+    // Jika result email dan password benar, row pasti hanya 1 baris
+    if ($count == 1) {
+        $_SESSION['login_user']['email'] = $email;
+        $_SESSION['login_user']['nama'] = $row['nama'];
+        $_SESSION['login_user']['alamat'] = $row['alamat'];
+        $_SESSION['login_user']['no_telp'] = $row['no_telp'];
+
+        header("location:index.php");
+    } else {
+        $error = "Username atau password salah!";
+    }
+} else if (array_key_exists('signup', $_POST)) {
+    $nama = $_POST['nama'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $no_telp = $_POST['no_telp'];
+    $alamat   = $_POST['alamat'];
+
+    $query = "INSERT INTO user (nama, email, password, no_telp, alamat) VALUES ('$nama', '$email', '$password', '$no_telp', '$alamat')";
+    $result = mysqli_query($db, $query);
+    $signup_success = true;
+
+//    header('location:.php');
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,9 +80,17 @@ include "session.php";
                     <div class="col-12">
                         <h1 class="title display-3">AKA Health</h1>
                         <!-- <h3 class="text-secondary">Book hospital room and doctor at comfort from your home. </h2> -->
-                        <h3 class="text-secondary">Log In or Sign Up to get the best experience of AKA Health</h2>
+                        <h3 class="text-secondary">Log In or Sign Up to get the best experience of AKA Health</h3>
                     </div>
                     <div class="col-12">
+                        <?php if ($signup_success) { ?>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Sign Up successful!</strong> Go ahead and Log In.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <?php } ?>
                         <div class="tab mt-4">
                              <button class="tablinks" onclick="openCity(event, 'a')" id="defaultOpen">Login</button>
                              <button class="tablinks" onclick="openCity(event, 'b')">Sign Up</button>
@@ -55,10 +100,10 @@ include "session.php";
                                 <div class="form-row">
         							<div class="col-8">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email">
+                                            <input required type="email" class="form-control" placeholder="Email" name="email">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Password">
+                                            <input required type="password" class="form-control" placeholder="Password" name="password">
                                         </div>
         							</div>
                                     <div class="col-6">
@@ -72,15 +117,15 @@ include "session.php";
                                 <div class="form-row">
         							<div class="col-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Full Name">
+                                            <input required type="text" class="form-control" placeholder="Full Name" name="nama">
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email">
+                                            <input required type="email" class="form-control" placeholder="Email" name="email">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Password">
+                                            <input required type="password" class="form-control" placeholder="Password" name="password">
                                         </div>
-        								<input type="checkbox" id="terms" name="terms">
+        								<input required type="checkbox" id="terms" name="terms">
         								<label for="terms">Have you read our <a href="terms.php">Terms &amp; Conditions</a> ?</label>
         							</div>
                                     <div class="col-6">
@@ -88,12 +133,12 @@ include "session.php";
                                             <textarea name="alamat" rows="4" class="form-control" placeholder="Alamat"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Phone Number">
+                                            <input required type="text" class="form-control" placeholder="Phone Number" name="no_telp">
                                         </div>
                                     </div>
         						</div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-7">
                                         <button type="submit" class="btn btn-aka btn-block mt-1 btn-lg" name="signup">Sign Up</button>
                                     </div>
                                 </div>
@@ -130,6 +175,7 @@ include "session.php";
 
         <script src="assets/js/jquery.js" charset="utf-8"></script>
         <script src="assets/js/bootstrap.min.js" charset="utf-8"></script>
+        <script src="assets/js/popper.min.js" charset="utf-8"></script>
         <script type="text/javascript">
         function openCity(evt, cityName) {
             // Declare all variables

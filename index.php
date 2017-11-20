@@ -1,3 +1,7 @@
+<?php
+session_start();
+include "config.php";
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,14 +26,26 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="login.php">Log In / Sign Up</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.php">Help</a>
-              </li>
+                <?php if (array_key_exists('login_user', $_SESSION)) { ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <?php echo $_SESSION['login_user']['nama'] ?>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="logout.php">Log Out</a>
+                        </div>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.php">Log In / Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.php">Help</a>
+                    </li>
+                <?php } ?>
             </ul>
           </div>
         </nav>
@@ -39,7 +55,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h1 class="title display-3">AKA Health</h1>
-                        <h3 class="text-secondary">Book hospital room and doctor at comfort from your home. </h2>
+                        <h3 class="text-secondary">Book hospital room and doctor at comfort from your home. </h3>
                     </div>
                     <div class="col-12">
                         <div class="tab mt-4">
@@ -47,33 +63,50 @@
                              <button class="tablinks" onclick="openCity(event, 'b')">Symptoms Checker</button>
                         </div>
                         <div id="a" class="tabcontent">
-                            <form>
+                            <form action="hospital/detail_hospital.php" method="post">
                              <div class="form-row">
-                               <div class="col-5">
-                                 <label class="col-form-label">Hospital Name</label>
-                                 <input type="text" class="form-control" placeholder="Enter Hospital Name">
-                               </div>
-                               <div class="col-5">
-                                   <label class="col-form-label">Doctor's Expertise</label>
-                                 <input type="text" class="form-control" placeholder="Enter Doctor's expertise">
-                               </div>
-                               <div class="col-2">
-                                   <label class="col-form-label"></label>
-                                   <button type="submit" class="btn btn-aka btn-block mt-1 btn-lg">Search</button>
-                               </div>
+                                 <div class="col-9 frmSearch">
+                                     <label class="col-form-label">Search by Hospital Name</label>
+                                     <input type="text" class="form-control" id="search-box" placeholder="Enter Hospital Name" name="nama_rs" autocomplete="off" >
+                                     <div id="suggesstion-box"></div>
+                                 </div>
+                                 <div class="col-3">
+                                     <label class="col-form-label">&nbsp;</label>
+                                     <button type="submit" class="btn btn-aka btn-block">Go</button>
+                                 </div>
                              </div>
                            </form>
+                            <div class="text-center mt-4">
+                                <div style="width: 100%; height: 20px; border-bottom: 3px solid #eee; text-align: center" class="mt-3">
+                                  <span style="font-size: 20px; background-color: #fff; padding: 0 10px;" class="text-secondary">
+                                    Or <!--Padding is optional-->
+                                  </span>
+                                </div>
+                            </div>
+                            <form action="">
+                                <br>
+                                <div class="form-row">
+                                    <div class="col-9">
+                                        <label class="col-form-label">Search by Expertise</label>
+                                        <input type="text" class="form-control" placeholder="Enter Doctor's Expertise">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">&nbsp;</label>
+                                        <button type="submit" class="btn btn-aka btn-block">Go</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div id="b" class="tabcontent">
                             <form>
                              <div class="form-row">
                                <div class="col-10">
-                                   <label class="col-form-label">Enter your symptomps</label>
+                                   <label class="col-form-label">Enter your symptomp(s)</label>
                                  <input type="text" class="form-control" placeholder="e.g. Headache, sore eyes, etc.">
                                </div>
                                <div class="col-2">
-                                   <label class="col-form-label"></label>
-                                   <button type="submit" class="btn btn-aka btn-block mt-1 btn-lg">Search</button>
+                                   <label class="col-form-label">&nbsp;</label>
+                                   <button type="submit" class="btn btn-aka btn-block">Search</button>
                                </div>
                              </div>
                            </form>
@@ -166,6 +199,7 @@
         </div>
 
         <script src="assets/js/jquery.js" charset="utf-8"></script>
+        <script src="assets/js/popper.min.js" charset="utf-8"></script>
         <script src="assets/js/bootstrap.min.js" charset="utf-8"></script>
         <script type="text/javascript">
         function openCity(evt, cityName) {
@@ -193,6 +227,30 @@
             $('#totop').click(function () {
                 $('html, body').animate({scrollTop: '0px'}, 300);
             })
+
+            // AJAX call for autocomplete
+            $(document).ready(function(){
+                $("#search-box").keyup(function(){
+                    $.ajax({
+                        type: "POST",
+                        url: "hospital/find_hospital.php",
+                        data:'keyword='+$(this).val(),
+                        beforeSend: function(){
+                            $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+                        },
+                        success: function(data){
+                            $("#suggesstion-box").show();
+                            $("#suggesstion-box").html(data);
+                            $("#search-box").css("background","#FFF");
+                        }
+                    });
+                });
+            });
+            //To select country name
+            function selectCountry(val) {
+                $("#search-box").val(val);
+                $("#suggesstion-box").hide();
+            }
         </script>
     </body>
 </html>
