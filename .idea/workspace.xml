@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c2dffa7-46a1-4247-bde7-c3a2003061b4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/popper.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hospital/detail_hospital.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hospital/find_hospital.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logout.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/style.css" afterPath="$PROJECT_DIR$/assets/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/login.php" afterPath="$PROJECT_DIR$/login.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session.php" afterPath="$PROJECT_DIR$/session.php" />
-    </list>
+    <list default="true" id="4c2dffa7-46a1-4247-bde7-c3a2003061b4" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +14,7 @@
       <file leaf-file-name="login.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/login.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
+            <state relative-caret-position="-2534">
               <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="53" />
               <folding>
                 <element signature="e#3711#3718#1#HTML" expanded="true" />
@@ -54,10 +44,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="find_hospital.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="find_hospital.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hospital/find_hospital.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
+            <state relative-caret-position="169">
               <caret line="17" column="9" lean-forward="true" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
               <folding>
                 <marker date="1511114973145" expanded="true" signature="452:542" ph="SELECT * FRO... rumahsakit" />
@@ -66,10 +56,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail_hospital.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="detail_hospital.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hospital/detail_hospital.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
+            <state relative-caret-position="-731">
               <caret line="2" column="12" lean-forward="true" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
               <folding>
                 <marker date="1511116492256" expanded="true" signature="87:126" ph="SELECT * FRO... rumahsakit" />
@@ -213,12 +203,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1511102010244</updated>
-      <workItem from="1511102016494" duration="15196000" />
+      <workItem from="1511102016494" duration="15800000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15196000" />
+    <option name="totallyTimeSpent" value="15800000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1382" height="744" extended-state="6" />
@@ -304,32 +294,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="53" />
-          <folding>
-            <element signature="e#3711#3718#1#HTML" expanded="true" />
-            <marker date="1511114333914" expanded="true" signature="301:369" ph="SELECT id FR... admin" />
-            <marker date="1511114333914" expanded="true" signature="1163:1283" ph="INSERT INTO user... " />
-            <marker date="1511114333914" expanded="true" signature="1413:1447" ph="..." />
-            <marker date="1511114333914" expanded="true" signature="1424:1447" ph="..." />
-            <marker date="1511114333914" expanded="true" signature="1734:1755" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hospital/detail_hospital.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="12" lean-forward="true" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding>
-            <marker date="1511116492256" expanded="true" signature="87:126" ph="SELECT * FRO... rumahsakit" />
-            <marker date="1511116492256" expanded="true" signature="87:137" ph="SELECT * FRO... rumahsakit" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -344,12 +308,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2534">
+          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="53" />
+          <folding>
+            <element signature="e#3711#3718#1#HTML" expanded="true" />
+            <marker date="1511114333914" expanded="true" signature="301:369" ph="SELECT id FR... admin" />
+            <marker date="1511114333914" expanded="true" signature="1163:1283" ph="INSERT INTO user... " />
+            <marker date="1511114333914" expanded="true" signature="1413:1447" ph="..." />
+            <marker date="1511114333914" expanded="true" signature="1424:1447" ph="..." />
+            <marker date="1511114333914" expanded="true" signature="1734:1755" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hospital/find_hospital.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
+        <state relative-caret-position="169">
           <caret line="17" column="9" lean-forward="true" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
           <folding>
             <marker date="1511114973145" expanded="true" signature="452:542" ph="SELECT * FRO... rumahsakit" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hospital/detail_hospital.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-731">
+          <caret line="2" column="12" lean-forward="true" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+          <folding>
+            <marker date="1511116492256" expanded="true" signature="87:126" ph="SELECT * FRO... rumahsakit" />
+            <marker date="1511116492256" expanded="true" signature="87:137" ph="SELECT * FRO... rumahsakit" />
           </folding>
         </state>
       </provider>
