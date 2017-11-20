@@ -1,10 +1,25 @@
 <?php
 include "../session.php";
-$doctor = $_GET['id'];
+$id = $_GET['id'];
+
 // detail dokter
 $query = "select * from dokter where id_dok = $id";
 $result = mysqli_query($db, $query);
-$row = mysqli_fetch_array($result);
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+if (isset($_POST['make'])) {
+    $id_user = $_SESSION['login_user']['id_user'];
+    $id_dok = $row['id_dok'];
+    $tgl_appoint = date('Y')."-".$_POST['bln']."-".$_POST['tgl'];
+    $jam_appoint = $_POST['jam'].':00';
+
+    $query = "INSERT INTO appointment (id_dok, id_user, tgl_appoint, jam_appoint) 
+VALUES ('$id_dok', '$id_user', '$tgl_appoint', '$jam_appoint')";
+    echo $query;
+    $result = mysqli_query($db, $query);
+    $_SESSION['signup_success'] = "Appointment success!";
+    header('location:../index.php');
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -61,6 +76,43 @@ $row = mysqli_fetch_array($result);
         <div class="row">
             <div class="col-12">
                 <h3>Make an appointment with <?php echo $row['nama_dok'] ?></h3>
+                <form action="" method="post" class="mt-4">
+                    <div class="form-row">
+                        <div class="col-3">
+                            <label for="date">Tanggal</label>
+                            <select class="form-control" id="date" name="tgl">
+                                <?php for ($i = 1; $i <= 30; $i++) {
+                                    echo "<option value='$i'>$i</option>";
+                                } ?>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="date">Bulan</label>
+                            <select class="form-control" id="date" name="bln">
+                                <?php for ($i = 11; $i <= 12; $i++) {
+                                    echo "<option value='$i'>$i</option>";
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row pt-3">
+                        <div class="col-3">
+                            <label for="date">Jam</label>
+                            <select class="form-control" id="date" name="jam">
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-aka mt-5" name="make">Make Appointment</button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,35 +1,34 @@
 <?php
-session_start();
-include "../config.php";
-$id = $_GET['id'];
+include "session.php";
+$id = $_SESSION['login_user']['id_user'];
 
 // detail dokter
-$query = "select * from dokter where id_dok = $id";
+$query = "select * from user where id_user = $id";
 $result = mysqli_query($db, $query);
 $row = mysqli_fetch_array($result);
 
 // penyakit yg bisa ditangani dokter
-$query2 = "SELECT penyakit.* FROM penyakit
-JOIN dokter_penyakit ON penyakit.`id_penyakit` = dokter_penyakit.`id_penyakit`
-JOIN dokter ON dokter.`id_dok` = dokter_penyakit.`id_dok`
-WHERE dokter.`id_dok` = $id";
-$penyakit = mysqli_query($db, $query2);
+$query2 = "SELECT appointment.*, dokter.nama_dok FROM appointment
+JOIN user ON user.`id_user` = appointment.`id_user`
+JOIN dokter ON dokter.`id_dok` = appointment.`id_dok`
+WHERE appointment.`id_user` = $id";
+$appointment = mysqli_query($db, $query2);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>AKA Health</title>
-    <link rel="icon" type="image/png" href="../assets/img/logohospital.png" sizes="16x16" />
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/img/logohospital.png" sizes="16x16" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../index.php">
-        <img src="../assets/img/logohospital.png" alt="logo aka hospital"
+    <a class="navbar-brand" href="index.php">
+        <img src="assets/img/logohospital.png" alt="logo aka hospital"
              width="35">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -49,15 +48,15 @@ $penyakit = mysqli_query($db, $query2);
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../logout.php">Log Out</a>
+                        <a class="dropdown-item" href="logout.php">Log Out</a>
                     </div>
                 </li>
             <?php } else { ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="../login.php">Log In / Sign Up</a>
+                    <a class="nav-link" href="login.php">Log In / Sign Up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../about.php">Help</a>
+                    <a class="nav-link" href="about.php">Help</a>
                 </li>
             <?php } ?>
         </ul>
@@ -74,21 +73,30 @@ $penyakit = mysqli_query($db, $query2);
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-4">
-                <img src="../assets/img/<?php echo $row['gambar'] ?>" class="img-fluid">
-            </div>
+<!--            <div class="col-4">-->
+<!--                <img src="assets/img/--><?php //echo $row['gambar'] ?><!--" class="img-fluid">-->
+<!--            </div>-->
             <div class="col-8">
-                <h1 class="title display-4"><?php echo $row['nama_dok'] ?></h1>
-                <h4>Speciality: <?php echo $row['keahlian'] ?></h4>
+                <h1 class="title display-4"><?php echo $row['nama'] ?></h1>
+                <h4>Email: <?php echo $row['email'] ?></h4>
+                <h4>Address: <?php echo $row['alamat'] ?></h4>
                 <h4>Phone: <?php echo $row['no_telp'] ?></h4>
                 <br>
-                <h5>Penyakit yang bisa ditangani: </h5>
-                <?php while ($baris = mysqli_fetch_assoc($penyakit)) { ?>
-                    <a href="../symptoms/detail_disease.php?disease=<?php echo $baris['nama_penyakit'] ?>"><?php echo $baris['nama_penyakit'] ?></a>
-                    <br>
-                <?php } ?>
-                <br>
-                <a href="../appointment/make.php?id=<?php echo $row['id_dok'] ?>" class="btn btn-aka mt-1 btn-fluid">Make an Appointment</a>
+                <h5>Appointments: </h5>
+                <table class="table">
+                    <tr>
+                        <th>Dokter</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                    </tr>
+                    <?php while ($baris = mysqli_fetch_assoc($appointment)) { ?>
+                        <tr>
+                            <td><?php echo $baris['nama_dok'] ?></td>
+                            <td><?php echo $baris['tgl_appoint'] ?></td>
+                            <td><?php echo $baris['jam_appoint'] ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
             </div>
         </div>
     </div>
@@ -109,7 +117,7 @@ $penyakit = mysqli_query($db, $query2);
         </div>
         <div class="row">
             <div class="col">
-                <img src="../assets/img/logohospital.png" alt="logo aka hospital"
+                <img src="assets/img/logohospital.png" alt="logo aka hospital"
                      width="100" class="mt-4">
                 <p class="text-secondary text-center mt-2">&copy;2017 AKA Health</p>
             </div>
@@ -118,8 +126,8 @@ $penyakit = mysqli_query($db, $query2);
 </div>
 
 
-<script src="../assets/js/jquery.js" charset="utf-8"></script>
-<script src="../assets/js/popper.min.js" charset="utf-8"></script>
-<script src="../assets/js/bootstrap.min.js" charset="utf-8"></script>
+<script src="assets/js/jquery.js" charset="utf-8"></script>
+<script src="assets/js/popper.min.js" charset="utf-8"></script>
+<script src="assets/js/bootstrap.min.js" charset="utf-8"></script>
 </body>
 </html>

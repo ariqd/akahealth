@@ -18,6 +18,7 @@ if (array_key_exists('login', $_POST)) {
         $_SESSION['login_user']['nama'] = $row['nama'];
         $_SESSION['login_user']['alamat'] = $row['alamat'];
         $_SESSION['login_user']['no_telp'] = $row['no_telp'];
+        $_SESSION['login_user']['id_user'] = $row['id_user'];
 
         header("location:index.php");
     } else {
@@ -221,4 +222,6 @@ if (array_key_exists('login', $_POST)) {
 <?php
 unset($_SESSION["signup_success"]);
 unset($_SESSION["error"]);
+unset($_SESSION["declined"]);
+
 ?>
