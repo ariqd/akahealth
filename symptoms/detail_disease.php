@@ -1,11 +1,20 @@
 <?php
 session_start();
 include "../config.php";
-$expertise = $_GET['expertise'];
+$disease = $_GET['disease'];
 
-// list doctor expertise
-$query ="SELECT dokter.*, rumahsakit.nama_rs FROM dokter join rumahsakit on dokter.id_rs = rumahsakit.id_rs WHERE keahlian ='$expertise'";
-$result = mysqli_query($db, $query);
+// detail penyakit
+$query1 = "SELECT * from penyakit where nama_penyakit = '$disease'";
+$result = mysqli_query($db, $query1);
+$row = mysqli_fetch_array($result);
+
+// list doctor
+$query2 = "SELECT dokter.*, rumahsakit.nama_rs FROM penyakit
+JOIN dokter_penyakit ON penyakit.`id_penyakit` = dokter_penyakit.`id_penyakit`
+JOIN dokter ON dokter.`id_dok` = dokter_penyakit.`id_dok`
+JOIN rumahsakit on dokter.id_rs = rumahsakit.id_rs
+WHERE penyakit.`nama_penyakit` = '$disease'";
+$doctors = mysqli_query($db, $query2);
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,15 +69,21 @@ $result = mysqli_query($db, $query);
 <div class="app pt-3">
     <div class="container">
 
-        <!-- Detail RS-->
+        <!-- List dokter-->
         <div class="row">
             <div class="col-12">
-                <h1 class="title display-4">Doctors specialized in: <?php echo $expertise ?></h1>
+                <h1 class="title display-4"><?php echo $row['nama_penyakit'] ?></h1>
+                <p>
+                    <?php echo $row['desc_penyakit'] ?>
+                </p>
             </div>
         </div>
         <div class="row mt-3">
-            <?php while ($baris = mysqli_fetch_assoc($result)) { ?>
-                <div class="col-3">
+            <div class="col-12">
+                <h4 class="title">Doctors specialized in <?php echo $disease ?></h4>
+            </div>
+            <?php while ($baris = mysqli_fetch_assoc($doctors)) { ?>
+                <div class="col-3 mt-3">
                     <div class="card">
                         <img class="card-img-top" src="../assets/img/<?php echo $baris['gambar'] ?>">
                         <div class="card-body">

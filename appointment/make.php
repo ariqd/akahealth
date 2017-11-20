@@ -1,11 +1,10 @@
 <?php
-session_start();
-include "../config.php";
-$expertise = $_GET['expertise'];
-
-// list doctor expertise
-$query ="SELECT dokter.*, rumahsakit.nama_rs FROM dokter join rumahsakit on dokter.id_rs = rumahsakit.id_rs WHERE keahlian ='$expertise'";
+include "../session.php";
+$doctor = $_GET['id'];
+// detail dokter
+$query = "select * from dokter where id_dok = $id";
 $result = mysqli_query($db, $query);
+$row = mysqli_fetch_array($result);
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,31 +58,10 @@ $result = mysqli_query($db, $query);
 <!-- Content -->
 <div class="app pt-3">
     <div class="container">
-
-        <!-- Detail RS-->
         <div class="row">
             <div class="col-12">
-                <h1 class="title display-4">Doctors specialized in: <?php echo $expertise ?></h1>
+                <h3>Make an appointment with <?php echo $row['nama_dok'] ?></h3>
             </div>
-        </div>
-        <div class="row mt-3">
-            <?php while ($baris = mysqli_fetch_assoc($result)) { ?>
-                <div class="col-3">
-                    <div class="card">
-                        <img class="card-img-top" src="../assets/img/<?php echo $baris['gambar'] ?>">
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="../doctor/detail_doctor.php?id=<?php echo $baris['id_dok'] ?>" class="text-dark">
-                                    <?php echo $baris['nama_dok'] ?>
-                                </a>
-                            </h4>
-                            <h6 class="card-subtitle my-2 text-muted">Specialist in: <b><?php echo $baris['keahlian'] ?></b></h6>
-                            <p class="card-text title">From <a href="../hospital/detail_hospital.php?nama_rs=<?php echo $baris['nama_rs'] ?>"><?php echo $baris['nama_rs'] ?></a></p>
-                            <a href="../appointment/make.php?id=<?php echo $baris['id_dok'] ?>" class="btn btn-aka mt-1 btn-fluid">Make an Appointment</a>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
         </div>
     </div>
 </div>

@@ -11,5 +11,6 @@ $row = mysqli_fetch_array($ses_sql, MYSQLI_ASSOC);
 $login_session = $row['nama'];
 
 if (!isset($_SESSION['login_user'])) {
+    $_SESSION['declined'] = "Please login first!";
     header("location:login.php");
 }

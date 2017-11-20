@@ -1,11 +1,19 @@
 <?php
 session_start();
 include "../config.php";
-$expertise = $_GET['expertise'];
+$id = $_GET['id'];
 
-// list doctor expertise
-$query ="SELECT dokter.*, rumahsakit.nama_rs FROM dokter join rumahsakit on dokter.id_rs = rumahsakit.id_rs WHERE keahlian ='$expertise'";
+// detail dokter
+$query = "select * from dokter where id_dok = $id";
 $result = mysqli_query($db, $query);
+$row = mysqli_fetch_array($result);
+
+// penyakit yg bisa ditangani dokter
+$query2 = "SELECT penyakit.* FROM penyakit
+JOIN dokter_penyakit ON penyakit.`id_penyakit` = dokter_penyakit.`id_penyakit`
+JOIN dokter ON dokter.`id_dok` = dokter_penyakit.`id_dok`
+WHERE dokter.`id_dok` = $id";
+$penyakit = mysqli_query($db, $query2);
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,30 +68,28 @@ $result = mysqli_query($db, $query);
 <div class="app pt-3">
     <div class="container">
 
-        <!-- Detail RS-->
+        <!-- Detail dokter-->
         <div class="row">
             <div class="col-12">
-                <h1 class="title display-4">Doctors specialized in: <?php echo $expertise ?></h1>
             </div>
         </div>
         <div class="row mt-3">
-            <?php while ($baris = mysqli_fetch_assoc($result)) { ?>
-                <div class="col-3">
-                    <div class="card">
-                        <img class="card-img-top" src="../assets/img/<?php echo $baris['gambar'] ?>">
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="../doctor/detail_doctor.php?id=<?php echo $baris['id_dok'] ?>" class="text-dark">
-                                    <?php echo $baris['nama_dok'] ?>
-                                </a>
-                            </h4>
-                            <h6 class="card-subtitle my-2 text-muted">Specialist in: <b><?php echo $baris['keahlian'] ?></b></h6>
-                            <p class="card-text title">From <a href="../hospital/detail_hospital.php?nama_rs=<?php echo $baris['nama_rs'] ?>"><?php echo $baris['nama_rs'] ?></a></p>
-                            <a href="../appointment/make.php?id=<?php echo $baris['id_dok'] ?>" class="btn btn-aka mt-1 btn-fluid">Make an Appointment</a>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
+            <div class="col-4">
+                <img src="../assets/img/<?php echo $row['gambar'] ?>" class="img-fluid">
+            </div>
+            <div class="col-8">
+                <h1 class="title display-4"><?php echo $row['nama_dok'] ?></h1>
+                <h4>Speciality: <?php echo $row['keahlian'] ?></h4>
+                <h4>Phone: <?php echo $row['no_telp'] ?></h4>
+                <br>
+                <h5>Penyakit yang bisa ditangani: </h5>
+                <?php while ($baris = mysqli_fetch_assoc($penyakit)) { ?>
+                    <a href="../symptoms/detail_disease.php?disease=<?php echo $baris['nama_penyakit'] ?>"><?php echo $baris['nama_penyakit'] ?></a>
+                    <br>
+                <?php } ?>
+                <br>
+                <a href="../appointment/make.php?id=<?php echo $baris['id_dok'] ?>" class="btn btn-aka mt-1 btn-fluid">Make an Appointment</a>
+            </div>
         </div>
     </div>
 </div>

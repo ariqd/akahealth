@@ -94,6 +94,14 @@ if (array_key_exists('login', $_POST)) {
                                 </button>
                             </div>
                         <?php } ?>
+                        <?php if (array_key_exists('declined', $_SESSION)) { ?>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <?php echo $_SESSION['declined'] ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <?php } ?>
                     </div>
                     <div class="col-12">
                         <div class="tab mt-4">

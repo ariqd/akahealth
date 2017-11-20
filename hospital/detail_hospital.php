@@ -94,9 +94,13 @@ $dok_result = mysqli_query($db, $dok_query);
                     <div class="card">
                         <img class="card-img-top" src="../assets/img/<?php echo $baris['gambar'] ?>">
                         <div class="card-body">
-                            <h4 class="card-title"><?php echo $baris['nama_dok'] ?></h4>
+                            <h4 class="card-title">
+                                <a href="../doctor/detail_doctor.php?id=<?php echo $baris['id_dok'] ?>" class="text-dark">
+                                    <?php echo $baris['nama_dok'] ?>
+                                </a>
+                            </h4>
                             <h6 class="card-subtitle my-2 text-muted">Specialist in: <b><?php echo $baris['keahlian'] ?></b></h6>
-                            <a href="#" class="btn btn-aka mt-3 btn-fluid">Make an Appointment</a>
+                            <a href="../appointment/make.php?id=<?php echo $baris['id_dok'] ?>" class="btn btn-aka mt-3 btn-fluid">Make an Appointment</a>
                         </div>
                     </div>
                 </div>

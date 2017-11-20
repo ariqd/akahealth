@@ -87,6 +87,7 @@ include "config.php";
                                 </div>
                             </div>
 
+                            <!-- Form Expertise -->
                             <form action="expertise/detail_expertise.php" method="get" id="expertiseForm">
                                 <br>
                                 <div class="form-row">
@@ -102,19 +103,22 @@ include "config.php";
                                 </div>
                             </form>
                         </div>
+
+                        <!-- Tab & Form Symptoms -->
                         <div id="b" class="tabcontent">
-                            <form>
-                             <div class="form-row">
-                               <div class="col-10">
-                                   <label class="col-form-label">Enter your symptomp(s)</label>
-                                 <input type="text" class="form-control" placeholder="e.g. Headache, sore eyes, etc.">
-                               </div>
-                               <div class="col-2">
-                                   <label class="col-form-label">&nbsp;</label>
-                                   <button type="submit" class="btn btn-aka btn-block">Search</button>
-                               </div>
-                             </div>
-                           </form>
+                            <form action="symptoms/detail_disease.php" method="get" id="symptomsForm">
+                                <div class="form-row">
+                                    <div class="col-9 frmSearch3">
+                                        <label class="col-form-label">Enter your symptom</label>
+                                        <input type="text" class="form-control" id="search-box3" placeholder="e.g Fever, fatigue, nasal congestion, etc" name="disease" autocomplete="off" >
+                                        <div id="suggesstion-box3"></div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">&nbsp;</label>
+                                        <button type="submit" class="btn btn-aka btn-block">Details</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -286,6 +290,33 @@ include "config.php";
                 $('#expertiseForm').attr('action', 'expertise/detail_expertise.php?expertise=' + $("#search-box2").val());
                 $("#suggesstion-box2").hide();
             }
+
+        // Symptoms
+        // AJAX call for autocomplete
+        $(document).ready(function(){
+            $("#search-box3").keyup(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "symptoms/find_symptoms.php",
+                    data:'keyword='+$(this).val(),
+                    beforeSend: function(){
+                        $("#search-box3").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+                    },
+                    success: function(data){
+                        $("#suggesstion-box3").show();
+                        $("#suggesstion-box3").html(data);
+                        $("#search-box3").css("background","#FFF");
+                    }
+                });
+            });
+        });
+
+        // When select expertise name
+        function selectDisease(val) {
+            $("#search-box3").val(val);
+            $('#symptomsForm').attr('action', 'symptoms/detail_disease.php?disease=' + $("#search-box3").val());
+            $("#suggesstion-box3").hide();
+        }
         </script>
     </body>
 </html>
