@@ -63,7 +63,9 @@ include "config.php";
                              <button class="tablinks" onclick="openCity(event, 'b')">Symptoms Checker</button>
                         </div>
                         <div id="a" class="tabcontent">
-                            <form action="hospital/detail_hospital.php" method="post">
+
+                            <!-- Form Hospital -->
+                            <form action="hospital/detail_hospital.php" method="get" id="hospitalForm">
                              <div class="form-row">
                                  <div class="col-9 frmSearch">
                                      <label class="col-form-label">Search by Hospital Name</label>
@@ -76,19 +78,22 @@ include "config.php";
                                  </div>
                              </div>
                            </form>
+
                             <div class="text-center mt-4">
                                 <div style="width: 100%; height: 20px; border-bottom: 3px solid #eee; text-align: center" class="mt-3">
                                   <span style="font-size: 20px; background-color: #fff; padding: 0 10px;" class="text-secondary">
-                                    Or <!--Padding is optional-->
+                                    Or
                                   </span>
                                 </div>
                             </div>
-                            <form action="">
+
+                            <form action="expertise/detail_expertise.php" method="get" id="expertiseForm">
                                 <br>
                                 <div class="form-row">
-                                    <div class="col-9">
-                                        <label class="col-form-label">Search by Expertise</label>
-                                        <input type="text" class="form-control" placeholder="Enter Doctor's Expertise">
+                                    <div class="col-9 frmSearch2">
+                                        <label class="col-form-label">Search by Doctor's Speciality</label>
+                                        <input type="text" class="form-control" id="search-box2" placeholder="Enter Doctors Speciality" name="expertise" autocomplete="off" >
+                                        <div id="suggesstion-box2"></div>
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">&nbsp;</label>
@@ -182,8 +187,8 @@ include "config.php";
                                 <a href="#" class="aka">Hospitals</a>
                                 <a href="#" class="aka">Doctors</a>
                                 <a href="#" class="aka">Symptomps Checker</a>
-                                <a href="#" class="aka">Help</a>
-                                <a href="#" class="aka">About</a>
+                                <a href="terms.php" class="aka">Terms & Conditions</a>
+                                <a href="about.php" class="aka">About</a>
                             </div>
                         </div>
                     </div>
@@ -226,8 +231,9 @@ include "config.php";
 
             $('#totop').click(function () {
                 $('html, body').animate({scrollTop: '0px'}, 300);
-            })
+            });
 
+            // Hospital
             // AJAX call for autocomplete
             $(document).ready(function(){
                 $("#search-box").keyup(function(){
@@ -246,10 +252,39 @@ include "config.php";
                     });
                 });
             });
-            //To select country name
-            function selectCountry(val) {
+
+            // When select hospital name
+            function selectHospital(val) {
                 $("#search-box").val(val);
+                $('#hospitalForm').attr('action', 'hospital/detail_hospital.php?nama_rs=' + $("#search-box").val());
                 $("#suggesstion-box").hide();
+            }
+
+            // Expertise
+            // AJAX call for autocomplete
+            $(document).ready(function(){
+                $("#search-box2").keyup(function(){
+                    $.ajax({
+                        type: "POST",
+                        url: "expertise/find_expertise.php",
+                        data:'keyword='+$(this).val(),
+                        beforeSend: function(){
+                            $("#search-box2").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+                        },
+                        success: function(data){
+                            $("#suggesstion-box2").show();
+                            $("#suggesstion-box2").html(data);
+                            $("#search-box2").css("background","#FFF");
+                        }
+                    });
+                });
+            });
+
+            // When select expertise name
+            function selectExpertise(val) {
+                $("#search-box2").val(val);
+                $('#expertiseForm').attr('action', 'expertise/detail_expertise.php?expertise=' + $("#search-box2").val());
+                $("#suggesstion-box2").hide();
             }
         </script>
     </body>

@@ -29,7 +29,7 @@ if(!empty($_POST["keyword"])) {
             <?php
             foreach($result as $hospital) {
                 ?>
-                <li onClick="selectCountry('<?php echo $hospital["nama_rs"]; ?>');"><?php echo $hospital["nama_rs"]; ?></li>
+                <li onClick="selectHospital('<?php echo $hospital["nama_rs"]; ?>');"><?php echo $hospital["nama_rs"]; ?></li>
             <?php } ?>
         </ul>
     <?php } } ?>

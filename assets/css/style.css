@@ -3,10 +3,15 @@ body {
 }
 
 .app.app-alt {
-    padding-top: 100px;
+    padding-top: 50px;
 }
 
 .title {
+    color: #FF5A5F;
+}
+
+.title a {
+    font-weight: bold;
     color: #FF5A5F;
 }
 
@@ -65,16 +70,6 @@ div.tab button.active {
     /*animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
-/*@-webkit-keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-@keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}*/
-
 .content {
     margin-top: 9em;
 }
@@ -115,3 +110,4 @@ img.page-block-img {
     display: block;
     margin: 0 auto;
 }
+

@@ -1,17 +1,17 @@
 <?php
 session_start();
 include "../config.php";
-$nama_rs = $_GET['nama_rs'];
+$expertise = $_GET['expertise'];
 
-// detail rs
-$query ="SELECT rumahsakit.*, lokasi.nama_lokasi FROM rumahsakit JOIN lokasi on rumahsakit.id_lokasi = lokasi.id_lokasi WHERE nama_rs ='$nama_rs'";
+// list doctor expertise
+$query ="SELECT dokter.*, rumahsakit.nama_rs FROM dokter join rumahsakit on dokter.id_rs = rumahsakit.id_rs WHERE keahlian ='$expertise'";
 $result = mysqli_query($db, $query);
-$row = mysqli_fetch_array($result);
-$id_rs = $row['id_rs'];
+//$row = mysqli_fetch_array($result);
+//$id_dok = $row['id_dok'];
 
 //doktor di rs
-$dok_query ="SELECT * FROM dokter WHERE id_rs = $id_rs";
-$dok_result = mysqli_query($db, $dok_query);
+//$dok_query ="SELECT * FROM dokter WHERE id_rs = $id_rs";
+//$dok_result = mysqli_query($db, $dok_query);
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,34 +69,19 @@ $dok_result = mysqli_query($db, $dok_query);
         <!-- Detail RS-->
         <div class="row">
             <div class="col-12">
+                <h1 class="title display-4">Doctors specialized in: <?php echo $expertise ?></h1>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-4">
-                <img src="../assets/img/rs/<?php echo $row['gambar'] ?>" class="img-fluid">
-            </div>
-            <div class="col-8">
-                <h1 class="title display-4"><?php echo $row['nama_rs'] ?></h1>
-                <h4>Address: <?php echo $row['alamat'] . ", ". $row['nama_lokasi']; ?></h4>
-                <h4>Phone: <?php echo $row['no_telp'] ?></h4>
-            </div>
-        </div>
-
-        <!-- List dokter di rumah sakit -->
-        <div class="row mt-5 mb-3">
-            <div class="col-12">
-                <h3>Doctors</h3>
-            </div>
-        </div>
-        <div class="row">
-            <?php while ($baris = mysqli_fetch_assoc($dok_result)) { ?>
+            <?php while ($baris = mysqli_fetch_assoc($result)) { ?>
                 <div class="col-3">
                     <div class="card">
                         <img class="card-img-top" src="../assets/img/<?php echo $baris['gambar'] ?>">
                         <div class="card-body">
                             <h4 class="card-title"><?php echo $baris['nama_dok'] ?></h4>
                             <h6 class="card-subtitle my-2 text-muted">Specialist in: <b><?php echo $baris['keahlian'] ?></b></h6>
-                            <a href="#" class="btn btn-aka mt-3 btn-fluid">Make an Appointment</a>
+                            <p class="card-text title">From <a href="hospital/detail_hospital.php?nama_rs=<?php echo $baris['nama_rs'] ?>"><?php echo $baris['nama_rs'] ?></a></p>
+                            <a href="#" class="btn btn-aka mt-1 btn-fluid">Make an Appointment</a>
                         </div>
                     </div>
                 </div>

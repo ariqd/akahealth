@@ -1,7 +1,6 @@
 <?php
 session_start();
 include "config.php";
-$signup_success = false;
 if (array_key_exists('login', $_POST)) {
     // username dan password dari form login
     $email = mysqli_real_escape_string($db, $_POST['email']);
@@ -22,20 +21,19 @@ if (array_key_exists('login', $_POST)) {
 
         header("location:index.php");
     } else {
-        $error = "Username atau password salah!";
+        $_SESSION['error'] = "Username atau password salah!";
+        header("location:login.php");
     }
 } else if (array_key_exists('signup', $_POST)) {
     $nama = $_POST['nama'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $no_telp = $_POST['no_telp'];
-    $alamat   = $_POST['alamat'];
+    $alamat = $_POST['alamat'];
 
     $query = "INSERT INTO user (nama, email, password, no_telp, alamat) VALUES ('$nama', '$email', '$password', '$no_telp', '$alamat')";
     $result = mysqli_query($db, $query);
-    $signup_success = true;
-
-//    header('location:.php');
+    $_SESSION['signup_success'] = true;
 }
 ?>
 <!DOCTYPE html>
@@ -79,11 +77,8 @@ if (array_key_exists('login', $_POST)) {
                 <div class="row" >
                     <div class="col-12">
                         <h1 class="title display-3">AKA Health</h1>
-                        <!-- <h3 class="text-secondary">Book hospital room and doctor at comfort from your home. </h2> -->
                         <h3 class="text-secondary">Log In or Sign Up to get the best experience of AKA Health</h3>
-                    </div>
-                    <div class="col-12">
-                        <?php if ($signup_success) { ?>
+                        <?php if (isset($_SESSION['signup_success'])) { ?>
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                 <strong>Sign Up successful!</strong> Go ahead and Log In.
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -91,6 +86,16 @@ if (array_key_exists('login', $_POST)) {
                                 </button>
                             </div>
                         <?php } ?>
+                        <?php if (array_key_exists('error', $_SESSION)) { ?>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Login failed!</strong> wrong username or password
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="col-12">
                         <div class="tab mt-4">
                              <button class="tablinks" onclick="openCity(event, 'a')" id="defaultOpen">Login</button>
                              <button class="tablinks" onclick="openCity(event, 'b')">Sign Up</button>
@@ -205,3 +210,7 @@ if (array_key_exists('login', $_POST)) {
         </script>
     </body>
 </html>
+<?php
+unset($_SESSION["signup_success"]);
+unset($_SESSION["error"]);
+?>
